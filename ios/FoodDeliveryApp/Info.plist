@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>Korea</string>
 	<key>CFBundleDisplayName</key>
-	<string>FoodDeliveryApp</string>
+	<string>요기이츠우와 라이더스</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
