@@ -501,3 +501,8 @@ hs_err_pid*
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/webstorm,androidstudio,reactnative,android
+/ios/FoodDeliveryApp.xcworkspace/contents.xcworkspacedata
+/ios/FoodDeliveryApp.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+/ios/FoodDeliveryApp/ko.lproj/InfoPlist.strings
+/ios/Pods/*
+/ios/Podfile.lock
