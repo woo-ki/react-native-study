@@ -1,6 +1,6 @@
 {
   "name": "FoodDeliveryApp",
-  "version": "0.0.1",
+  "version": "1.22.19",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
