@@ -9,7 +9,18 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useSelector} from "react-redux";
 import {RootState} from "./src/store/reducer";
-import {RootStackParamList} from "./App";
+
+export type LoggedInParamList = {
+    Orders: undefined;
+    Settings: undefined;
+    Delivery: undefined;
+    Complete: {orderId: string};
+};
+
+export type RootStackParamList = {
+    SignIn: undefined;
+    SignUp: undefined;
+};
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();

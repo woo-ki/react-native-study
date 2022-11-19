@@ -10,10 +10,10 @@ import {
     View,
 } from "react-native";
 import DismissKeyboardView from "../components/DismissKeyboardView";
-import axios, {Axios, AxiosError} from "axios";
+import axios, {AxiosError} from "axios";
 import Config from "react-native-config";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
-import {RootStackParamList} from "../../App";
+import {RootStackParamList} from "../../AppInner";
 
 type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, "SignUp">;
 
