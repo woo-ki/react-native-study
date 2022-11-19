@@ -1,11 +1,20 @@
 import React, {useCallback, useState} from "react";
-import {Alert, Pressable, StyleSheet, Text, View} from "react-native";
+import {
+    Alert,
+    Dimensions,
+    Pressable,
+    StyleSheet,
+    Text,
+    View,
+} from "react-native";
 import orderSlice, {Order} from "../slices/order";
 import {useAppDispatch, useAppSelector} from "../store";
 import axios, {AxiosError} from "axios";
 import Config from "react-native-config";
 import {NavigationProp, useNavigation} from "@react-navigation/native";
 import {LoggedInParamList} from "../../AppInner";
+import NaverMapView, {Marker, Path} from "react-native-nmap/index";
+import getDistanceFromLatLonInKm from "../utils";
 
 const EachOrder = ({item}: {item: Order}) => {
     const dispatch = useAppDispatch();
@@ -13,6 +22,7 @@ const EachOrder = ({item}: {item: Order}) => {
     const [detail, setDetail] = useState(false);
     const [loading, setLoading] = useState(false);
     const accessToken = useAppSelector(state => state.user.accessToken);
+    const {start, end} = item;
     const toggleDetail = useCallback(() => {
         setDetail(prev => !prev);
     }, []);
@@ -52,13 +62,60 @@ const EachOrder = ({item}: {item: Order}) => {
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     원
                 </Text>
-                <Text>삼성동</Text>
-                <Text>왕십리동</Text>
+                <Text style={styles.eachInfo}>
+                    {getDistanceFromLatLonInKm(
+                        start.latitude,
+                        start.longitude,
+                        end.latitude,
+                        end.longitude,
+                    ).toFixed(1)}
+                    km
+                </Text>
             </Pressable>
             {detail && (
                 <View>
-                    <View>
-                        <Text>네이버맵이 들어갈 장소</Text>
+                    <View
+                        style={{
+                            width: Dimensions.get("window").width - 30,
+                            height: 200,
+                            marginTop: 10,
+                        }}>
+                        <NaverMapView
+                            style={{width: "100%", height: "100%"}}
+                            zoomControl={false}
+                            center={{
+                                zoom: 10,
+                                tilt: 0,
+                                latitude: (start.latitude + end.latitude) / 2,
+                                longitude:
+                                    (start.longitude + end.longitude) / 2,
+                            }}>
+                            <Marker
+                                coordinate={{
+                                    latitude: start.latitude,
+                                    longitude: start.longitude,
+                                }}
+                                pinColor="blue"
+                            />
+                            <Path
+                                coordinates={[
+                                    {
+                                        latitude: start.latitude,
+                                        longitude: start.longitude,
+                                    },
+                                    {
+                                        latitude: end.latitude,
+                                        longitude: end.longitude,
+                                    },
+                                ]}
+                            />
+                            <Marker
+                                coordinate={{
+                                    latitude: end.latitude,
+                                    longitude: end.longitude,
+                                }}
+                            />
+                        </NaverMapView>
                     </View>
                     <View style={styles.buttonWrapper}>
                         <Pressable
