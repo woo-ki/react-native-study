@@ -16,6 +16,7 @@ import axios, {AxiosError} from "axios";
 import Config from "react-native-config";
 import userSlice from "./src/slices/user";
 import {Alert} from "react-native";
+import orderSlice from "./src/slices/order";
 
 export type LoggedInParamList = {
     Orders: undefined;
@@ -79,8 +80,9 @@ const AppInner = () => {
     useEffect(() => {
         const callback = (data: any) => {
             console.log(data);
-            // dispatch(orderSlice.actions.addOrder(data));
+            dispatch(orderSlice.actions.addOrder(data));
         };
+
         if (socket && isLoggedIn) {
             socket.emit("acceptOrder", "hello");
             socket.on("order", callback);

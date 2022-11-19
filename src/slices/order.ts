@@ -12,14 +12,17 @@ export interface Order {
     };
     price: number;
 }
+
 interface InitialState {
     orders: Order[];
     deliveries: Order[];
 }
+
 const initialState: InitialState = {
     orders: [],
     deliveries: [],
 };
+
 const orderSlice = createSlice({
     name: "order",
     initialState,
@@ -46,7 +49,7 @@ const orderSlice = createSlice({
             const delivery = state.deliveries.findIndex(
                 v => v.orderId === action.payload,
             );
-            if (delivery > -1) {
+            if (index > -1) {
                 state.deliveries.splice(delivery, 1);
             }
         },
