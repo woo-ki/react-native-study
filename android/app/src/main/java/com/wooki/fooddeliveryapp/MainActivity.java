@@ -1,4 +1,4 @@
-package com.fooddeliveryapp;
+package com.wooki.fooddeliveryapp;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
