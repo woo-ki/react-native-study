@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import Orders from "./src/pages/Orders";
 import Delivery from "./src/pages/Delivery";
 import Settings from "./src/pages/Settings";
@@ -38,43 +38,73 @@ const AppInner = () => {
     const [socket, disconnect] = useSocket();
     const dispatch = useAppDispatch();
 
-    // 앱 실행 시 토큰 있으면 로그인하는 코드
-    useEffect(() => {
-        const getTokenAndRefresh = async () => {
-            try {
-                const token = await EncryptedStorage.getItem("refreshToken");
-                if (!token) {
-                    return;
-                }
-                const response = await axios.post(
-                    `${Config.API_URL}/refreshToken`,
-                    {},
-                    {
-                        headers: {
-                            authorization: `Bearer ${token}`,
-                        },
-                    },
-                );
-                dispatch(
-                    userSlice.actions.setUser({
-                        name: response.data.data.name,
-                        email: response.data.data.email,
-                        accessToken: response.data.data.accessToken,
-                    }),
-                );
-            } catch (error) {
-                console.error(error);
-                if (
-                    ((error as AxiosError).response?.data as {code?: string})
-                        .code === "expired"
-                ) {
-                    Alert.alert("알림", "다시 로그인 해주세요.");
-                }
-            } finally {
-                // wooki 스플래시 스크린 제거
+    const tokenRefresh = useCallback(async () => {
+        try {
+            const token = await EncryptedStorage.getItem("refreshToken");
+            if (!token) {
+                return;
             }
+            const response = await axios.post(
+                `${Config.API_URL}/refreshToken`,
+                {},
+                {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+            dispatch(
+                userSlice.actions.setUser({
+                    name: response.data.data.name,
+                    email: response.data.data.email,
+                    accessToken: response.data.data.accessToken,
+                }),
+            );
+            return response.data.data.accessToken;
+        } catch (error) {
+            console.error(error);
+            if (
+                ((error as AxiosError).response?.data as {code?: string})
+                    .code === "expired"
+            ) {
+                Alert.alert("알림", "다시 로그인 해주세요.");
+            }
+        } finally {
+            // wooki 스플래시 스크린 제거
+        }
+    }, []);
+
+    useEffect(() => {
+        const init = async () => {
+            // 앱 실행 시 토큰 있으면 로그인하는 코드
+            await tokenRefresh();
+            axios.interceptors.response.use(
+                res => res,
+                error => {
+                    const {
+                        config,
+                        response: {status},
+                    } = error;
+
+                    if (status === 419) {
+                        if (error.response.data.code === "expired") {
+                            console.log("만료되서 갱신함");
+                            tokenRefresh().then(r => {
+                                const origin = config;
+                                origin.headers.authorization = `Bearer ${r}`;
+                                return axios(origin);
+                            });
+                        } else {
+                            return Promise.reject(error);
+                        }
+                    } else {
+                        return Promise.reject(error);
+                    }
+                },
+            );
         };
-        getTokenAndRefresh().then(() => {});
+        init().then();
+        return () => {};
     }, []);
 
     useEffect(() => {
