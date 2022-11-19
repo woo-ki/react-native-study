@@ -20,7 +20,7 @@ function Settings() {
                 {},
                 {
                     headers: {
-                        Authorization: `Bearer ${accessToken}`,
+                        authorization: `Bearer ${accessToken}`,
                     },
                 },
             );
