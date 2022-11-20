@@ -10,7 +10,6 @@ import {useNavigation} from "@react-navigation/native";
 type IngScreenProps = NativeStackScreenProps<LoggedInParamList, "Ing">;
 const Ing = () => {
     const navigation = useNavigation<IngScreenProps>();
-    console.dir(navigation);
 
     const deliveries = useAppSelector(state => state.order.deliveries);
     const [myPosition, setMyPosition] = useState<{
@@ -28,7 +27,7 @@ const Ing = () => {
             },
             console.error,
             {
-                enableHighAccuracy: true,
+                enableHighAccuracy: false,
                 timeout: 20000,
             },
         );

@@ -1,5 +1,5 @@
 import React, {useCallback} from "react";
-import {FlatList, Pressable, StyleSheet, Text, View} from "react-native";
+import {FlatList} from "react-native";
 import {useSelector} from "react-redux";
 import {RootState} from "../store/reducer";
 import {Order} from "../slices/order";

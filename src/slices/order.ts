@@ -49,7 +49,7 @@ const orderSlice = createSlice({
             const delivery = state.deliveries.findIndex(
                 v => v.orderId === action.payload,
             );
-            if (index > -1) {
+            if (delivery > -1) {
                 state.deliveries.splice(delivery, 1);
             }
         },
