@@ -34,7 +34,7 @@ const EachOrder = ({item}: {item: Order}) => {
                 {orderId: item.orderId},
                 {headers: {authorization: `Bearer ${accessToken}`}},
             );
-            dispatch(orderSlice.actions.rejectOrder(item.orderId));
+            dispatch(orderSlice.actions.acceptOrder(item.orderId));
             navigation.navigate("Delivery");
         } catch (e) {
             let errorResponse = (e as AxiosError).response;
@@ -51,7 +51,7 @@ const EachOrder = ({item}: {item: Order}) => {
     }, [item.orderId]);
     const onReject = useCallback(() => {
         dispatch(orderSlice.actions.rejectOrder(item.orderId));
-    }, []);
+    }, [item.orderId]);
 
     return (
         <View key={item.orderId} style={styles.orderContainer}>

@@ -23,6 +23,7 @@ export type LoggedInParamList = {
     Orders: undefined;
     Settings: undefined;
     Delivery: undefined;
+    Ing: undefined;
     Complete: {orderId: string};
 };
 

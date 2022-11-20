@@ -11,7 +11,7 @@ const Delivery = () => {
             <Stack.Screen
                 name="Ing"
                 component={Ing}
-                options={{headerShown: false}}
+                options={{title: "내 오더"}}
             />
             <Stack.Screen
                 name="Complete"
