@@ -166,6 +166,7 @@ const AppInner = () => {
                         component={Settings}
                         options={{
                             title: "내 정보",
+                            unmountOnBlur: true,
                             tabBarIcon: () => (
                                 <FontAwesomeIcon name="gear" size={20} />
                             ),
