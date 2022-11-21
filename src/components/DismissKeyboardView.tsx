@@ -5,7 +5,7 @@ import {
     TouchableWithoutFeedback,
     ViewStyle,
 } from "react-native";
-import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scrollview";
+import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 
 type Component = {
     style?: StyleProp<ViewStyle>;
