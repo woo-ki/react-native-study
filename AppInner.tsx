@@ -18,6 +18,7 @@ import userSlice from "./src/slices/user";
 import {Alert} from "react-native";
 import orderSlice from "./src/slices/order";
 import usePermissions from "./src/hooks/usePermissions";
+import SplashScreen from "react-native-splash-screen";
 
 export type LoggedInParamList = {
     Orders: undefined;
@@ -73,7 +74,7 @@ const AppInner = () => {
                 Alert.alert("알림", "다시 로그인 해주세요.");
             }
         } finally {
-            // wooki 스플래시 스크린 제거
+            SplashScreen.hide();
         }
     }, []);
 
